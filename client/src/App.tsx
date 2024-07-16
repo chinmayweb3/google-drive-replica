@@ -1,11 +1,15 @@
-import { Button } from "./components/ui/button";
-
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
 function App() {
   return (
     <>
-      <div className="flex h-screen items-center justify-center">
-        <Button>Dummy</Button>
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" index element={<Home />} />
+          {/* <Route path="/auth/login" element={<Login />} />
+          <Route path="/auth/register" element={<Register />} /> */}
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
