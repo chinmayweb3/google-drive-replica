@@ -9,15 +9,11 @@ const port = process.env.PORT || 4000;
 const app: Express = express();
 
 app.use(express.json());
-app.use(
-  cors({
-    origin: "https://localhost:3000",
-  })
-);
+app.use(cors({ origin: process.env.ClIENT_URL }));
 
 //test
 app.get("/", (req: Request, res: Response) => {
-  res.send("Express + TypeScript Server");
+  res.send("Hello World");
 });
 
 app.use("/folders", folderRouter);
