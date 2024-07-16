@@ -1,7 +1,6 @@
 import express, { Request, Response } from "express";
 import dotenv from "dotenv";
 import { fireAuth } from "../config/firebase";
-import { getAuth } from "firebase-admin/auth";
 dotenv.config();
 
 const router = express.Router();
