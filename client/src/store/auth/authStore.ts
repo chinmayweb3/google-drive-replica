@@ -69,6 +69,10 @@ const authSlice = createSlice({
     dNameChanged: (state, action: PayloadAction<string>) => {
       state.displayName = action.payload;
     },
+    logoutClicked: (state) => {
+      state.user = undefined;
+      state.isLoggedIn = false;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(registerFormSubmit.pending, (state) => {
@@ -81,7 +85,7 @@ const authSlice = createSlice({
     });
 
     builder.addCase(registerFormSubmit.fulfilled, (state, action) => {
-      console.log("registerFormSubmit fulfilled ", action.payload.data);
+      // console.log("registerFormSubmit fulfilled ", action.payload.data);
       const user: IUser = action.payload.data;
 
       state.emailnPasswordLoading = false;
@@ -104,4 +108,5 @@ export const authStore = {
   loading: authSlice.actions.authLoading,
   emailChanged: authSlice.actions.emailChanged,
   dNameChanged: authSlice.actions.dNameChanged,
+  logoutClicked: authSlice.actions.logoutClicked,
 };
