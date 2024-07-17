@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { authReducer } from "../pages/store/auth/authStore";
+import { authReducer } from "../store/auth/authStore";
 
 const CombineReducers = combineReducers({
   auth: authReducer,
