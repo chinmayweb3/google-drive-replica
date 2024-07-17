@@ -8,18 +8,24 @@ import { initialState } from "./types";
 import authApi from "../../api/auth";
 import { IRootState } from "../../config/reduxStore";
 
-export const registerFormSubmit: AsyncThunk<void, string, any> =
-  createAsyncThunk(
-    "auth/registerSubmit",
-    async (password: string, thunkApi) => {
-      const { getState } = thunkApi;
-      const state = getState() as IRootState;
+const registerFormSubmit: AsyncThunk<string, string, any> = createAsyncThunk(
+  "auth/registerSubmit",
+  async (password: string, thunkApi) => {
+    const { getState } = thunkApi;
+    const state = getState() as IRootState;
 
-      try {
-        await authApi.register({ email: state.auth.email, password });
-      } catch (err: any) {}
-    },
-  );
+    const resp = await authApi.register({
+      email: state.auth.email,
+      password,
+    });
+
+    if (resp.status == "success") {
+      return resp.msg;
+    } else {
+      throw resp.err;
+    }
+  },
+);
 
 const authSlice = createSlice({
   initialState,
@@ -35,6 +41,14 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(registerFormSubmit.pending, (state) => {
       state.emailnPasswordLoading = true;
+    });
+    builder.addCase(registerFormSubmit.rejected, (state, action: any) => {
+      state.emailnPasswordLoading = false;
+      state.error = (action?.error?.message as string) ?? "error";
+    });
+
+    builder.addCase(registerFormSubmit.fulfilled, (state, action) => {
+      state.emailnPasswordLoading = false;
     });
   },
 });

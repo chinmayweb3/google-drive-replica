@@ -27,7 +27,6 @@ const Register = () => {
             <TextField
               disabled={emailnPasswordLoading}
               required
-              id="outlined-basic"
               label="Email"
               variant="outlined"
               type="email"
@@ -37,7 +36,6 @@ const Register = () => {
             <TextField
               disabled={emailnPasswordLoading}
               required
-              id="outlined-basic"
               label="Password"
               type="password"
               variant="outlined"
@@ -46,7 +44,6 @@ const Register = () => {
             />
             <p className="py-[5px] text-[16px]">{error}</p>
             <Button type="submit" variant="contained">
-              Submit
               {emailnPasswordLoading ? "Loading..." : "Login"}
             </Button>
           </form>

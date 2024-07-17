@@ -35,7 +35,7 @@ class Auth extends globalClass implements IAuth {
 
       return { status: "success", msg: resp.data };
     } else {
-      return { status: "error", err: resp.data };
+      return { status: "error", err: resp.data.err };
     }
   }
 }
