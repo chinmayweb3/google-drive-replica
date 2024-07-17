@@ -49,10 +49,12 @@ const authSlice = createSlice({
     builder.addCase(registerFormSubmit.rejected, (state, action: any) => {
       state.emailnPasswordLoading = false;
       state.error = (action?.error?.message as string) ?? "error";
+      state.isLoggedIn = false;
     });
 
     builder.addCase(registerFormSubmit.fulfilled, (state, action) => {
       state.emailnPasswordLoading = false;
+      state.isLoggedIn = true;
     });
   },
 });
