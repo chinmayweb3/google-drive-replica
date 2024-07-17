@@ -20,7 +20,6 @@ const emailAndPassClicked: AsyncThunk<any, string, any> = createAsyncThunk(
     }
 
     resp = await authApi.userCheckByToken(resp.data);
-    console.log(":resp");
 
     if (resp.status == "error") {
       localStorage.removeItem("accessToken");
