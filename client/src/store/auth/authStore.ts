@@ -23,6 +23,8 @@ const emailAndPassClicked: AsyncThunk<any, string, any> = createAsyncThunk(
     console.log(":resp");
 
     if (resp.status == "error") {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
       throw resp.err;
     }
     return resp.data;
@@ -42,6 +44,8 @@ const initializeState: AsyncThunk<any, void, any> = createAsyncThunk(
     const resp = await authApi.userCheckByToken(token);
 
     if (resp.status == "error") {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
       throw resp.err;
     }
     return resp.data;
@@ -70,6 +74,8 @@ const registerFormSubmit: AsyncThunk<any, string, any> = createAsyncThunk(
     resp = await authApi.userCheckByToken(token);
 
     if (resp.status == "error") {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
       throw resp.err;
     }
 
