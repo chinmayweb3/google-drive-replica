@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import Navbar from "./components/navbar";
 import { ReduxProvider } from "./config/reduxProvider";
 import Initialize from "./config/initialize";
+import Drive from "./pages/Drive";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route path="/" index element={<Home />} />
             <Route path="/auth/login" element={<Login />} />
             <Route path="/auth/register" element={<Register />} />
+            <Route path="/drive" element={<Drive />} />
           </Routes>
         </BrowserRouter>
       </Initialize>
