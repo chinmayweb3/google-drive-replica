@@ -3,6 +3,7 @@ import { globalClass } from "./global";
 import { fireAuth } from "../config/firebase";
 
 type InputField = {
+  name?: string;
   email: string;
   password: string;
 };
@@ -30,7 +31,7 @@ class Auth extends globalClass implements IAuth {
     if (response.status == 201) {
       const token = await signInWithCustomToken(fireAuth, resp.data.jwt);
 
-      localStorage.setItem("acessToken", await token.user.getIdToken());
+      localStorage.setItem("accessToken", await token.user.getIdToken());
       localStorage.setItem("refreshToken", token.user.refreshToken);
 
       return { status: "success", msg: resp.data };

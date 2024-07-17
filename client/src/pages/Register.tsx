@@ -6,7 +6,7 @@ import { authStore } from "../store/auth/authStore";
 
 const Register = () => {
   const [pass, setPass] = useState("");
-  const { email, error, emailnPasswordLoading } = useAppSelector(
+  const { email, error, emailnPasswordLoading, displayName } = useAppSelector(
     (state) => state.auth,
   );
 
@@ -16,6 +16,8 @@ const Register = () => {
     e.preventDefault();
 
     const res = await dispatch(authStore.registerFormSubmit(pass));
+
+    console.log("regiseter ", res);
   };
 
   return (
@@ -24,6 +26,14 @@ const Register = () => {
         <div className="w-full max-w-[600px] rounded-md border border-stone-300 bg-stone-100 px-[100px] py-[80px] shadow-md">
           <h1 className="mb-[50px] text-center text-[46px]">REGISTER</h1>
           <form onSubmit={submitIt} className="flex flex-col gap-[20px]">
+            <TextField
+              disabled={emailnPasswordLoading}
+              label="Name"
+              variant="outlined"
+              type="text"
+              value={displayName}
+              onChange={(e) => dispatch(authStore.dNameChanged(e.target.value))}
+            />
             <TextField
               disabled={emailnPasswordLoading}
               required

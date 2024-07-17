@@ -12,13 +12,17 @@ router.post("/login", async (req: Request, res: Response) => {});
 
 //get all document
 router.post("/register", async (req: Request, res: Response) => {
-  const { email, password } = req.body;
+  const { email, password, name } = req.body;
   try {
     if (!email || !password) {
       throw new Error("email/password is required");
     }
 
-    const user = await fireAuth.createUser({ email, password });
+    const user = await fireAuth.createUser({
+      email,
+      password,
+      displayName: name,
+    });
     const jwt = await fireAuth.createCustomToken(user.uid);
 
     res.status(201).json({ data: { jwt } });

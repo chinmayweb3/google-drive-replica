@@ -17,6 +17,7 @@ const registerFormSubmit: AsyncThunk<string, string, any> = createAsyncThunk(
     const resp = await authApi.register({
       email: state.auth.email,
       password,
+      name: state.auth.displayName,
     });
 
     if (resp.status == "success") {
@@ -36,6 +37,9 @@ const authSlice = createSlice({
     },
     emailChanged: (state, action: PayloadAction<string>) => {
       state.email = action.payload;
+    },
+    dNameChanged: (state, action: PayloadAction<string>) => {
+      state.displayName = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -58,4 +62,5 @@ export const authStore = {
   registerFormSubmit,
   loading: authSlice.actions.authLoading,
   emailChanged: authSlice.actions.emailChanged,
+  dNameChanged: authSlice.actions.dNameChanged,
 };
