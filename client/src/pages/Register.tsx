@@ -1,23 +1,28 @@
 import { Button, TextField } from "@mui/material";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../config/reduxStore";
 import { authStore } from "../store/auth/authStore";
 
 const Register = () => {
   const [pass, setPass] = useState("");
-  const { email, error, emailnPasswordLoading, displayName } = useAppSelector(
-    (state) => state.auth,
-  );
-
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { email, error, emailnPasswordLoading, displayName, isLoggedIn } =
+    useAppSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/");
+    }
+  }, []);
 
   const submitIt = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const res = await dispatch(authStore.registerFormSubmit(pass));
-
-    console.log("regiseter ", res);
+    const { meta } = await dispatch(authStore.registerFormSubmit(pass));
+    if (meta.requestStatus == "fulfilled") {
+      navigate("/");
+    }
   };
 
   return (
