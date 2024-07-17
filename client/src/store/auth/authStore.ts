@@ -8,6 +8,27 @@ import { initialState, IUser } from "./types";
 import authApi from "../../api/auth";
 import { IRootState } from "../../config/reduxStore";
 
+const emailAndPassClicked: AsyncThunk<any, string, any> = createAsyncThunk(
+  "auth/emailAndPassClicked",
+  async (pass: string, thunkApi) => {
+    const { getState, dispatch } = thunkApi;
+    const state = getState() as IRootState;
+
+    let resp = await authApi.emailAndPassword(state.auth.email, pass);
+    if (resp.status == "error") {
+      throw resp.err;
+    }
+
+    resp = await authApi.userCheckByToken(resp.data);
+    console.log(":resp");
+
+    if (resp.status == "error") {
+      throw resp.err;
+    }
+    return resp.data;
+  },
+);
+
 const initializeState: AsyncThunk<any, void, any> = createAsyncThunk(
   "auth/initialize",
   async (_, __) => {
@@ -70,8 +91,15 @@ const authSlice = createSlice({
       state.displayName = action.payload;
     },
     logoutClicked: (state) => {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
       state.user = undefined;
       state.isLoggedIn = false;
+    },
+    registerResetState: (state) => {
+      state.displayName = "";
+      state.email = "";
+      state.error = "";
     },
   },
   extraReducers: (builder) => {
@@ -98,15 +126,36 @@ const authSlice = createSlice({
       state.isLoggedIn = true;
       state.user = user;
     });
+
+    builder.addCase(emailAndPassClicked.pending, (state, action) => {
+      state.isLoggedIn = false;
+      state.emailnPasswordLoading = true;
+    });
+    builder.addCase(emailAndPassClicked.fulfilled, (state, action) => {
+      const user: IUser = action.payload.data;
+      state.emailnPasswordLoading = false;
+      state.isLoggedIn = true;
+      state.user = user;
+    });
+    builder.addCase(emailAndPassClicked.rejected, (state, action: any) => {
+      // console.log("message ", action);
+      state.error = (action?.error?.message as string) ?? "error";
+      state.error = "email/password is invalid";
+
+      state.isLoggedIn = false;
+      state.emailnPasswordLoading = false;
+    });
   },
 });
 
 export const authReducer = authSlice.reducer;
 export const authStore = {
+  emailAndPassClicked,
   registerFormSubmit,
   initializeState,
   loading: authSlice.actions.authLoading,
   emailChanged: authSlice.actions.emailChanged,
   dNameChanged: authSlice.actions.dNameChanged,
   logoutClicked: authSlice.actions.logoutClicked,
+  registerResetState: authSlice.actions.registerResetState,
 };

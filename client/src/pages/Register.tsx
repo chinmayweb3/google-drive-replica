@@ -17,6 +17,12 @@ const Register = () => {
     }
   }, [isLoggedIn]);
 
+  useEffect(() => {
+    return () => {
+      dispatch(authStore.registerResetState());
+    };
+  }, []);
+
   const submitIt = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { meta } = await dispatch(authStore.registerFormSubmit(pass));

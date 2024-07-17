@@ -8,7 +8,14 @@ const router = express.Router();
 router.use(express.json());
 
 //get all document
-router.post("/login", async (req: Request, res: Response) => {});
+router.post("/login", async (req: Request, res: Response) => {
+  const { email, password, name } = req.body;
+  try {
+    if (!email || !password) {
+      throw new Error("email/password is required");
+    }
+  } catch (err: any) {}
+});
 
 //get all document
 router.post("/register", async (req: Request, res: Response) => {
@@ -47,12 +54,8 @@ router.get("/usercheckbytoken", async (req, res) => {
 
   if (token) {
     const verify = await fireAuth.verifyIdToken(token);
-    console.log("verify ", verify);
-    console.log(new Date(verify.iat).toTimeString());
-    console.log(new Date(verify.exp).toTimeString());
-    console.log(new Date(verify.auth_time).toTimeString());
 
-    return res.json({
+    return res.status(200).json({
       data: {
         email: verify.email,
         name: verify?.name,
@@ -66,8 +69,7 @@ router.get("/usercheckbytoken", async (req, res) => {
     });
   }
 
-  // console.log("token ", token);
-  res.json({ data: "failed" });
+  res.status(400).json({ data: "failed" });
 });
 
 export default router;

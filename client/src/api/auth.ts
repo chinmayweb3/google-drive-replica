@@ -1,4 +1,7 @@
-import { signInWithCustomToken } from "firebase/auth";
+import {
+  signInWithCustomToken,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { globalClass } from "./global";
 import { fireAuth } from "../config/firebase";
 
@@ -18,11 +21,33 @@ type ResAuth =
 interface IAuth {
   register(b: InputField): Promise<ResAuth>;
   userCheckByToken(t: string): Promise<ResAuth>;
+  emailAndPassword(e: string, pass: string): Promise<ResAuth>;
 }
 
 class Auth extends globalClass implements IAuth {
   constructor() {
     super();
+  }
+
+  async emailAndPassword(email: string, pass: string): Promise<ResAuth> {
+    try {
+      const data = await signInWithEmailAndPassword(fireAuth, email, pass);
+      console.log("auth/emailandpassword user ", data);
+      if (!data.user.email) {
+        throw "user not found";
+      }
+
+      const accessToken = await data.user.getIdToken();
+
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", data.user.refreshToken);
+
+      return { status: "success", data: accessToken };
+    } catch (err: any) {
+      console.log("auth/emailAndPassword error=> ", err);
+
+      return { status: "error", err };
+    }
   }
 
   async userCheckByToken(token: string): Promise<ResAuth> {
