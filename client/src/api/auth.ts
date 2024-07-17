@@ -1,4 +1,6 @@
+import { signInWithCustomToken } from "firebase/auth";
 import { globalClass } from "./global";
+import { fireAuth } from "../config/firebase";
 
 type InputField = {
   email: string;
@@ -25,8 +27,12 @@ class Auth extends globalClass implements IAuth {
       body,
     });
     const resp = await response.json();
-
     if (response.status == 201) {
+      const token = await signInWithCustomToken(fireAuth, resp.data.jwt);
+
+      localStorage.setItem("acessToken", await token.user.getIdToken());
+      localStorage.setItem("refreshToken", token.user.refreshToken);
+
       return { status: "success", msg: resp.data };
     } else {
       return { status: "error", err: resp.data };

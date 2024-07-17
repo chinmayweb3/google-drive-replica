@@ -13,7 +13,6 @@ export class globalClass {
       ? props.headers
       : { "Content-Type": "application/json" };
     const body = props.body ? JSON.stringify(props.body) : undefined;
-    console.log("body", body);
 
     const response = await fetch(`${this.baseURL}${path}`, {
       method,

@@ -1,21 +1,21 @@
 import { initializeApp } from "firebase/app";
-import fireStorage from "firebase/storage";
-import fireAuth from "firebase/auth";
-import fireStore from "firebase/firestore";
+import { getStorage } from "firebase/storage";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 const configApp = {
-  apiKey: process.env.APIKEY,
-  projectId: process.env.PROJECTID,
-  appId: process.env.APPID,
-  authDomain: process.env.AUTHDOMAIN,
-  messagingSenderId: process.env.MESSAGESENDERID,
-  storageBucket: process.env.STORAGEBUCKET,
+  apiKey: import.meta.env.VITE_APIKEY,
+  projectId: import.meta.env.VITE_PROJECTID,
+  appId: import.meta.env.VITE_APPID,
+  authDomain: import.meta.env.VITE_AUTHDOMAIN,
+  messagingSenderId: import.meta.env.VITE_MESSAGESENDERID,
+  storageBucket: import.meta.env.VITE_STORAGEBUCKET,
 };
 
 const app = initializeApp(configApp);
 
-fireStorage.getStorage(app);
-fireAuth.getAuth(app);
-fireStore.getFirestore(app);
+const fireStorage = getStorage(app);
+const fireAuth = getAuth(app);
+const fireStore = getFirestore(app);
 
 export { fireStorage, fireAuth, fireStore };
