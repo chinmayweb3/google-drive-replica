@@ -1,3 +1,5 @@
+import { globalClass } from "./global";
+
 type InputField = {
   email: string;
   password: string;
@@ -10,21 +12,27 @@ type ResAuth =
     }
   | { status: "error"; err: string };
 
-class Auth {
-  private baseUrl = "http://localhost:4000/";
+interface IAuth {
+  register(body: InputField): Promise<ResAuth>;
+}
 
-  register = async (body: InputField): Promise<ResAuth> => {
-    const response = await fetch(`${this.baseUrl}auth/register`, {
-      method: "POST",
-      body: JSON.stringify(body),
+class Auth extends globalClass implements IAuth {
+  //   private baseUrl = "http://localhost:4000/";
+  constructor() {
+    super();
+  }
+
+  async register(body: InputField): Promise<ResAuth> {
+    const response = await this.fetchData("POST", "auth/register", {
+      body,
     });
-    const data = await response.json();
-    if (response.status == 204) {
-      return { status: "success", msg: data.data };
+    const resp = await response.json();
+    if (resp.status == 204) {
+      return { status: "success", msg: resp.data };
     } else {
-      return { status: "error", err: data.data };
+      return { status: "error", err: resp.data };
     }
-  };
+  }
 }
 
 const authApi = new Auth();
