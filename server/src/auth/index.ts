@@ -18,7 +18,7 @@ router.post("/register", async (req: Request, res: Response) => {
       throw new Error("email/password is required");
     }
 
-    const user = await fireAuth.createUser({ email, password: "1" });
+    const user = await fireAuth.createUser({ email, password });
     const jwt = await fireAuth.createCustomToken(user.uid);
 
     res.status(201).json({ data: { jwt } });
@@ -34,7 +34,7 @@ router.post("/register", async (req: Request, res: Response) => {
       }
     }
 
-    res.status(400).json({ err: errMsg });
+    res.status(400).json({ data: { err: errMsg } });
   }
 });
 

@@ -10,7 +10,7 @@ type ResAuth =
       status: "success";
       msg: string;
     }
-  | { status: "error"; err: string };
+  | { status: "error"; err: any };
 
 interface IAuth {
   register(body: InputField): Promise<ResAuth>;
@@ -26,7 +26,7 @@ class Auth extends globalClass implements IAuth {
     });
     const resp = await response.json();
 
-    if (resp.status == 201) {
+    if (response.status == 201) {
       return { status: "success", msg: resp.data };
     } else {
       return { status: "error", err: resp.data };

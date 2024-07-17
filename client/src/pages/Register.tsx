@@ -9,13 +9,12 @@ const Register = () => {
 
   const submitIt = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("submited", form);
 
     const res = await authApi.register(form);
 
     if (res.status == "success") {
     } else {
-      setErr(res.err);
+      setErr(res.err.err);
     }
   };
   return (
@@ -43,6 +42,7 @@ const Register = () => {
               value={form.password}
               onChange={(e) => setForm({ ...form, password: e.target.value })}
             />
+            <p className="py-[5px] text-[16px]">{err}</p>
             <Button type="submit" variant="contained">
               Submit
             </Button>
