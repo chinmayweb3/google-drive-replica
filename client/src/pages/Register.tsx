@@ -5,13 +5,13 @@ import authApi from "../api/auth";
 
 const Register = () => {
   const [form, setForm] = useState({ email: "", password: "" });
-  const [error, setError] = useState("");
+  const [err, setErr] = useState("");
 
   const submitIt = async () => {
     const res = await authApi.register(form);
     if (res.status == "success") {
     } else {
-      setError(res.err);
+      setErr(res.err);
     }
   };
   return (
@@ -29,6 +29,7 @@ const Register = () => {
               onChange={(e) => setForm({ ...form, email: e.target.value })}
             />
             <TextField
+              error={!!err}
               id="outlined-basic"
               label="Password"
               type="password"
