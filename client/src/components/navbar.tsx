@@ -1,5 +1,7 @@
 import { Button, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../config/reduxStore";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 const Navbar = () => {
   return (
     <div className="fixed left-0 top-0 z-[10] h-[100px] w-full bg-stone-100 px-[80px]">
@@ -9,18 +11,31 @@ const Navbar = () => {
             LOGO
           </Typography>
         </Link>
-        <Link to={"/auth/login"}>
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            className="bg-slate-100 text-[22px]"
-          >
-            Login
-          </Button>
-        </Link>
+
+        <LoginProfile />
       </div>
     </div>
+  );
+};
+
+const LoginProfile = () => {
+  const { isLoggedIn } = useAppSelector((state) => state.auth);
+
+  if (isLoggedIn) {
+    return <AccountCircleIcon />;
+  }
+
+  return (
+    <Link to={"/auth/login"}>
+      <Button
+        variant="contained"
+        color="primary"
+        size="large"
+        className="bg-slate-100 text-[22px]"
+      >
+        Login
+      </Button>
+    </Link>
   );
 };
 
