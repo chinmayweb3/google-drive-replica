@@ -17,7 +17,6 @@ interface IAuth {
 }
 
 class Auth extends globalClass implements IAuth {
-  //   private baseUrl = "http://localhost:4000/";
   constructor() {
     super();
   }
@@ -26,7 +25,10 @@ class Auth extends globalClass implements IAuth {
     const response = await this.fetchData("POST", "auth/register", {
       body,
     });
+    console.log("auth/register response", response);
+
     const resp = await response.json();
+    console.log("auth/register await", resp);
     if (resp.status == 204) {
       return { status: "success", msg: resp.data };
     } else {

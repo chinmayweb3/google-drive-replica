@@ -7,8 +7,12 @@ const Register = () => {
   const [form, setForm] = useState({ email: "", password: "" });
   const [err, setErr] = useState("");
 
-  const submitIt = async () => {
+  const submitIt = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("submited", form);
+
     const res = await authApi.register(form);
+
     if (res.status == "success") {
     } else {
       setErr(res.err);
@@ -19,16 +23,18 @@ const Register = () => {
       <div className="flex h-full items-center justify-center">
         <div className="w-full max-w-[600px] rounded-md border border-stone-300 bg-stone-100 px-[100px] py-[80px] shadow-md">
           <h1 className="mb-[50px] text-center text-[46px]">REGISTER</h1>
-          <form className="flex flex-col gap-[20px]">
+          <form onSubmit={submitIt} className="flex flex-col gap-[20px]">
             <TextField
+              required
               id="outlined-basic"
               label="Email"
               variant="outlined"
-              type="url"
+              type="email"
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
             />
             <TextField
+              required
               error={!!err}
               id="outlined-basic"
               label="Password"
@@ -37,7 +43,7 @@ const Register = () => {
               value={form.password}
               onChange={(e) => setForm({ ...form, password: e.target.value })}
             />
-            <Button onSubmit={submitIt} variant="contained">
+            <Button type="submit" variant="contained">
               Submit
             </Button>
           </form>
