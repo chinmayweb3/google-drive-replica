@@ -4,12 +4,7 @@ import driveApi from "../../api/drive";
 
 const uploadFile: AsyncThunk<void, File, any> = createAsyncThunk(
   "drive/uploadSingleFile",
-  async (file: File, thunkApi) => {
-    // const response = await fetch("/api/drive/upload", {
-    //   method: "POST",
-    //   body: formData,
-    //   });
-
+  async (file: File, _) => {
     const response = await driveApi.uploadFile(file);
   },
 );
@@ -19,13 +14,13 @@ const driveSlice = createSlice({
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(uploadFile.pending, (state, action) => {
+    builder.addCase(uploadFile.pending, (state) => {
       state.uploadingFile = true;
     });
-    builder.addCase(uploadFile.fulfilled, (state, action) => {
+    builder.addCase(uploadFile.fulfilled, (state, _) => {
       state.uploadingFile = false;
     });
-    builder.addCase(uploadFile.rejected, (state, action) => {
+    builder.addCase(uploadFile.rejected, (state, _) => {
       state.uploadingFile = false;
     });
   },
