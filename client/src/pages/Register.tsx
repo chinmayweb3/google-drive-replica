@@ -65,7 +65,7 @@ const Register = () => {
             />
             <p className="py-[5px] text-[16px]">{error}</p>
             <Button type="submit" variant="contained">
-              {emailnPasswordLoading ? "Loading..." : "Login"}
+              {emailnPasswordLoading ? "Loading..." : "submit"}
             </Button>
           </form>
           <div className="flex w-full justify-center pt-[40px]">
