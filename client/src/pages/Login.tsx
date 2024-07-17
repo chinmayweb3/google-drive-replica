@@ -1,7 +1,17 @@
 import { Button, TextField } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAppSelector } from "../config/reduxStore";
+import { useEffect } from "react";
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  const { isLoggedIn } = useAppSelector((state) => state.auth);
+
+  useEffect(() => {
+    isLoggedIn && navigate("/");
+  }, []);
+
   return (
     <main className="h-screen text-black">
       <div className="flex h-full items-center justify-center">
