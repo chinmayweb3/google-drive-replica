@@ -1,12 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { initialState } from "./types";
 
-createSlice({
+const authSlice = createSlice({
   initialState,
   name: "auth",
   reducers: {
     authLoading: (state, action: PayloadAction<Boolean>) => {
-      state.loading = action.payload;
+      state.emailnPasswordLoading = action.payload;
     },
   },
 });
+
+export const authReducer = authSlice.reducer;
+export const authStore = {
+  loading: authSlice.actions.authLoading,
+};

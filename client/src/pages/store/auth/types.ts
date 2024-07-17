@@ -1,9 +1,12 @@
 export type IAuthSore = {
-  loading: Boolean;
+  emailnPasswordLoading: Boolean;
   error: string;
+  email: string;
+  displayName?: string;
 };
 
 export const initialState: IAuthSore = {
+  emailnPasswordLoading: false,
   error: "",
-  loading: false,
+  email: "",
 };
