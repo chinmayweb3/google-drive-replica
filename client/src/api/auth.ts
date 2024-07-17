@@ -31,9 +31,9 @@ class Auth extends globalClass implements IAuth {
         headers: { authorization: "Bearer " + token },
       });
 
-      console.log("auth/usercheckbytoken resp ", response);
+      // console.log("auth/usercheckbytoken resp ", response);
       const json = await response.json();
-      console.log("auth/usercheckbytoken json ", json);
+      // console.log("auth/usercheckbytoken json ", json);
 
       return { status: "success", data: json };
     } catch (err: unknown) {
