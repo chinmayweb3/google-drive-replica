@@ -42,4 +42,20 @@ router.post("/register", async (req: Request, res: Response) => {
   }
 });
 
+router.get("/usercheckbytoken", async (req, res) => {
+  const token = req.headers.authorization?.split(" ")[1];
+
+  if (token) {
+    const verify = await fireAuth.verifyIdToken(token);
+    console.log("verify ", verify);
+    console.log(new Date(verify.iat).toTimeString());
+    console.log(new Date(verify.exp).toTimeString());
+    console.log(new Date(verify.auth_time).toTimeString());
+    return res.json({ data: verify });
+  }
+
+  // console.log("token ", token);
+  res.json({ data: "failed" });
+});
+
 export default router;

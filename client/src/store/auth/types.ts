@@ -4,6 +4,8 @@ export type IAuthSore = {
   email: string;
   isLoggedIn: boolean;
   displayName?: string;
+
+  user?: IUser;
 };
 
 export const initialState: IAuthSore = {
@@ -11,4 +13,16 @@ export const initialState: IAuthSore = {
   isLoggedIn: false,
   error: "",
   email: "",
+  user: undefined,
+};
+
+export type IUser = {
+  email: string;
+  name: string;
+  exp: number;
+  iat: number;
+  user_id: string;
+  email_verified: boolean;
+  uuid: string;
+  sub: string;
 };

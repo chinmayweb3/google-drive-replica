@@ -19,10 +19,16 @@ const Navbar = () => {
 };
 
 const LoginProfile = () => {
-  const { isLoggedIn } = useAppSelector((state) => state.auth);
+  const { isLoggedIn, user } = useAppSelector((state) => state.auth);
+
+  console.log("user ", user);
 
   if (isLoggedIn) {
-    return <AccountCircleIcon />;
+    return (
+      <div className="h-[50px] w-[50px]">
+        <AccountCircleIcon sx={{ width: "100%", height: "100%" }} />
+      </div>
+    );
   }
 
   return (
