@@ -51,7 +51,19 @@ router.get("/usercheckbytoken", async (req, res) => {
     console.log(new Date(verify.iat).toTimeString());
     console.log(new Date(verify.exp).toTimeString());
     console.log(new Date(verify.auth_time).toTimeString());
-    return res.json({ data: verify });
+
+    return res.json({
+      data: {
+        email: verify.email,
+        name: verify?.name,
+        exp: verify.exp,
+        iat: verify.iat,
+        user_id: verify?.user_id,
+        email_verified: verify.email_verified,
+        uid: verify.uid,
+        sub: verify.sub,
+      },
+    });
   }
 
   // console.log("token ", token);

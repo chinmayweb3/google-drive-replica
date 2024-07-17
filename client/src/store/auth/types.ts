@@ -22,6 +22,6 @@ export type IUser = {
   iat?: number;
   user_id?: string;
   email_verified?: boolean;
-  uuid?: string;
+  uid?: string;
   sub?: string;
 };
