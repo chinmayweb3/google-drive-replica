@@ -1,4 +1,4 @@
-export type IAuthSore = {
+export type IAuthStore = {
   emailnPasswordLoading: boolean;
   error: string;
   email: string;
@@ -8,7 +8,7 @@ export type IAuthSore = {
   user?: IUser;
 };
 
-export const initialState: IAuthSore = {
+export const initialState: IAuthStore = {
   emailnPasswordLoading: false,
   isLoggedIn: false,
   error: "",

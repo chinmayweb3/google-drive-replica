@@ -1,12 +1,15 @@
 import { Button } from "@mui/material";
 import { useRef } from "react";
+import { useAppDispatch } from "../../config/reduxStore";
+import { driveStore } from "../../store/drive/driveStore";
 
 const Menu = () => {
   const uploadRef = useRef<HTMLInputElement>(null);
+  const dispatch = useAppDispatch();
 
-  const uploadItem = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const uploadItem = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      e.target.files[0];
+      await dispatch(driveStore.uploadFile(e.target.files[0]));
     }
   };
   return (

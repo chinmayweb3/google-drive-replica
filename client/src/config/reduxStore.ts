@@ -2,9 +2,11 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { authReducer } from "../store/auth/authStore";
+import { driveReducer } from "../store/drive/driveStore";
 
 const CombineReducers = combineReducers({
   auth: authReducer,
+  drive: driveReducer,
 });
 
 export const store = configureStore({
