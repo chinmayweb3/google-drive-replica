@@ -8,6 +8,19 @@ import { initialState } from "./types";
 import authApi from "../../api/auth";
 import { IRootState } from "../../config/reduxStore";
 
+const initializeState: AsyncThunk<void, void, any> = createAsyncThunk(
+  "auth/initialize",
+  async (_, thunkApi) => {
+    const { getState } = thunkApi;
+    const state = getState() as IRootState;
+
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      await authApi.userCheckByToken(token);
+    }
+  },
+);
+
 const registerFormSubmit: AsyncThunk<string, string, any> = createAsyncThunk(
   "auth/registerSubmit",
   async (password: string, thunkApi) => {
@@ -62,6 +75,7 @@ const authSlice = createSlice({
 export const authReducer = authSlice.reducer;
 export const authStore = {
   registerFormSubmit,
+  initializeState,
   loading: authSlice.actions.authLoading,
   emailChanged: authSlice.actions.emailChanged,
   dNameChanged: authSlice.actions.dNameChanged,

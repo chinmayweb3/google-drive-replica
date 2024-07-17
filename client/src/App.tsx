@@ -4,18 +4,21 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Navbar from "./components/navbar";
 import { ReduxProvider } from "./config/reduxProvider";
+import Initialize from "./config/initialize";
 
 function App() {
   return (
     <ReduxProvider>
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path="/" index element={<Home />} />
-          <Route path="/auth/login" element={<Login />} />
-          <Route path="/auth/register" element={<Register />} />
-        </Routes>
-      </BrowserRouter>
+      <Initialize>
+        <BrowserRouter>
+          <Navbar />
+          <Routes>
+            <Route path="/" index element={<Home />} />
+            <Route path="/auth/login" element={<Login />} />
+            <Route path="/auth/register" element={<Register />} />
+          </Routes>
+        </BrowserRouter>
+      </Initialize>
     </ReduxProvider>
   );
 }

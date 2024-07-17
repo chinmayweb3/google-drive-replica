@@ -8,7 +8,7 @@ interface IFetchData {
 export class globalClass {
   protected baseURL = "http://localhost:4000/";
 
-  async fetchData(method: IMethod, path: string, props: IFetchData) {
+  protected async fetchData(method: IMethod, path: string, props: IFetchData) {
     const headers = props.headers
       ? props.headers
       : { "Content-Type": "application/json" };

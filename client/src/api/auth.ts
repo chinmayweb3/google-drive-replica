@@ -23,6 +23,18 @@ class Auth extends globalClass implements IAuth {
   constructor() {
     super();
   }
+
+  async userCheckByToken(token: string) {
+    try {
+      const response = await this.fetchData("GET", "auth/usercheckbytoken", {
+        headers: { authorization: "Bearer " + token },
+      });
+
+      console.log("auth/usercheckbytoken resp ", response);
+    } catch (err: unknown) {
+      console.log("auth/usercheckbytoken eror ", err);
+    }
+  }
   async register(body: InputField): Promise<ResAuth> {
     const response = await this.fetchData("POST", "auth/register", {
       body,
