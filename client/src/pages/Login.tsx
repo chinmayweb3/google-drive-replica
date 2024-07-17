@@ -21,6 +21,12 @@ const Login = () => {
   };
 
   useEffect(() => {
+    return () => {
+      dispatch(authStore.registerResetState());
+    };
+  }, []);
+
+  useEffect(() => {
     isLoggedIn && navigate("/");
   }, [isLoggedIn]);
 
