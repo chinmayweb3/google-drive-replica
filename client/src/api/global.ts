@@ -17,13 +17,9 @@ export class globalClass {
 
     const response = await fetch(`${this.baseURL}${path}`, {
       method,
-      // mode: "no-cors",
       body,
-
       headers,
     });
-
-    console.log("fetch ", response);
 
     return response;
   }

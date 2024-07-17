@@ -13,22 +13,28 @@ router.post("/login", async (req: Request, res: Response) => {});
 //get all document
 router.post("/register", async (req: Request, res: Response) => {
   const { email, password } = req.body;
-
   try {
-    const user = await fireAuth.createUser({ email, password });
+    if (!email || !password) {
+      throw new Error("email/password is required");
+    }
 
+    const user = await fireAuth.createUser({ email, password: "1" });
     const jwt = await fireAuth.createCustomToken(user.uid);
 
     res.status(201).json({ data: { jwt } });
   } catch (err: any) {
-    res.statusCode = 400;
     console.log("auth/register => ", err);
+    let errMsg = err?.message ?? "not found";
 
     if (err instanceof FirebaseAuthError) {
-      return res.json({ err: err.message });
+      if (err.code.includes("email-already-exists")) {
+        errMsg = "Email already exists";
+      } else if (err.code.includes("invalid-password")) {
+        errMsg = "characters to short";
+      }
     }
 
-    res.json({ err: err?.message ?? "not found" });
+    res.status(400).json({ err: errMsg });
   }
 });
 
