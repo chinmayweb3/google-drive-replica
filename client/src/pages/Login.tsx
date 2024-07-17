@@ -31,6 +31,7 @@ const Login = () => {
           <h1 className="mb-[50px] text-center text-[46px]">LOGIN</h1>
           <form onSubmit={submitIt} className="flex flex-col gap-[20px]">
             <TextField
+              required
               label="Email"
               variant="outlined"
               type="email"
@@ -38,6 +39,7 @@ const Login = () => {
               onChange={(e) => dispatch(authStore.emailChanged(e.target.value))}
             />
             <TextField
+              required
               label="Password"
               type="password"
               variant="outlined"
