@@ -1,22 +1,23 @@
 import { Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import authApi from "../api/auth";
+import { useAppDispatch, useAppSelector } from "../config/reduxStore";
+import { authStore } from "../store/auth/authStore";
 
 const Register = () => {
-  const [form, setForm] = useState({ email: "", password: "" });
-  const [err, setErr] = useState("");
+  const [pass, setPass] = useState("");
+  const { email, error, emailnPasswordLoading } = useAppSelector(
+    (state) => state.auth,
+  );
+
+  const dispatch = useAppDispatch();
 
   const submitIt = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const res = await authApi.register(form);
-
-    if (res.status == "success") {
-    } else {
-      setErr(res.err.err);
-    }
+    const res = await dispatch(authStore.registerFormSubmit(pass));
   };
+
   return (
     <main className="h-screen text-black">
       <div className="flex h-full items-center justify-center">
@@ -24,27 +25,29 @@ const Register = () => {
           <h1 className="mb-[50px] text-center text-[46px]">REGISTER</h1>
           <form onSubmit={submitIt} className="flex flex-col gap-[20px]">
             <TextField
+              disabled={emailnPasswordLoading}
               required
               id="outlined-basic"
               label="Email"
               variant="outlined"
               type="email"
-              value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
+              value={email}
+              onChange={(e) => dispatch(authStore.emailChanged(e.target.value))}
             />
             <TextField
+              disabled={emailnPasswordLoading}
               required
-              error={!!err}
               id="outlined-basic"
               label="Password"
               type="password"
               variant="outlined"
-              value={form.password}
-              onChange={(e) => setForm({ ...form, password: e.target.value })}
+              value={pass}
+              onChange={(e) => setPass(e.target.value)}
             />
-            <p className="py-[5px] text-[16px]">{err}</p>
+            <p className="py-[5px] text-[16px]">{error}</p>
             <Button type="submit" variant="contained">
               Submit
+              {emailnPasswordLoading ? "Loading..." : "Login"}
             </Button>
           </form>
           <div className="flex w-full justify-center pt-[40px]">

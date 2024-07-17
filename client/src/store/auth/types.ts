@@ -1,5 +1,5 @@
 export type IAuthSore = {
-  emailnPasswordLoading: Boolean;
+  emailnPasswordLoading: boolean;
   error: string;
   email: string;
   displayName?: string;
