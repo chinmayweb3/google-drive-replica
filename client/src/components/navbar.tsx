@@ -25,8 +25,11 @@ const LoginProfile = () => {
 
   if (isLoggedIn) {
     return (
-      <div className="h-[50px] w-[50px]">
-        <AccountCircleIcon sx={{ width: "100%", height: "100%" }} />
+      <div className="flex gap-[30px]">
+        <Button variant="contained">Logout</Button>
+        <div className="h-[50px] w-[50px]">
+          <AccountCircleIcon sx={{ width: "100%", height: "100%" }} />
+        </div>
       </div>
     );
   }

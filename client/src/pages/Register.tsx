@@ -15,7 +15,7 @@ const Register = () => {
     if (isLoggedIn) {
       navigate("/");
     }
-  }, []);
+  }, [isLoggedIn]);
 
   const submitIt = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

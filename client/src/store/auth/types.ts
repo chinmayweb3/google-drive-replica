@@ -13,16 +13,15 @@ export const initialState: IAuthSore = {
   isLoggedIn: false,
   error: "",
   email: "",
-  user: undefined,
 };
 
 export type IUser = {
-  email: string;
-  name: string;
-  exp: number;
-  iat: number;
-  user_id: string;
-  email_verified: boolean;
-  uuid: string;
-  sub: string;
+  email?: string;
+  name?: string;
+  exp?: number;
+  iat?: number;
+  user_id?: string;
+  email_verified?: boolean;
+  uuid?: string;
+  sub?: string;
 };
